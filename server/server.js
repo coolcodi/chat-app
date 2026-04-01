@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== "production") {
 let port=process.env.PORT || 8000;
 
 
-const dbconnect=process.env.MONGODB_URI
+
 // 2️⃣ CREATE HTTP SERVER
 // (Required for Socket.IO)
 const server = http.createServer(app);
@@ -62,20 +62,22 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", Array.from(userSocketMap.keys()));
   });
 });
- connectmongo(dbconnect)
- .then(() => {
-    server.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
-    });
-  })
-  .catch((err) => {
-    console.error("DB connection failed:", err.message);
-    process.exit(1);
-  });
+ connectmongo(process.env.MONGODB_URI)
+ .then(() => console.log("DB connected"))
+  .catch(err => console.error(err));
+//  .then(() => {
+//     server.listen(port, () => {
+//       console.log(`Server running at http://localhost:${port}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("DB connection failed:", err.message);
+//     process.exit(1);
+//   });
 
-server.on("error", (err) => {
-  console.error("Server error:", err.message);
-});
+// server.on("error", (err) => {
+//   console.error("Server error:", err.message);
+// });
 
 // Middleware setup 
 
