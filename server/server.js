@@ -10,6 +10,9 @@ import { Server } from 'socket.io'
 // Create Express app and http server
 //1️⃣ CREATE EXPRESS APP
 const app=express();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 let port=process.env.PORT || 8000;
 
 
@@ -87,3 +90,7 @@ res.send("<h1>Server is ready </h1>");
 });
 app.use("/api/auth", userRouter);
 app.use("/api/messages", messageRouter);
+
+//export server for vercel
+
+export default server
