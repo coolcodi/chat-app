@@ -22,7 +22,7 @@ const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
     origin:["http://localhost:5173",
-       "https://your-app.vercel.app"
+    "https://chat-app-tau-five-88.vercel.app"
     ], // frontend URL
    
     credentials: true
@@ -82,7 +82,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors({
   origin:[ "http://localhost:5173",
-     "https://your-app.vercel.app"
+     "https://chat-app-tau-five-88.vercel.app"
   ],
 
   credentials: true
