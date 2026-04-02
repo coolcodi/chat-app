@@ -1,6 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 import { generateToken } from "../jwtservice/jwt.js";
-import User from "../model/user.model.js";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
 // sign-up a new user 
