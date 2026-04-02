@@ -10,13 +10,10 @@ import { Server } from 'socket.io'
 // Create Express app and http server
 //1️⃣ CREATE EXPRESS APP
 const app=express();
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
 let port=process.env.PORT || 8000;
 
 
-
+// const dbconnect=process.env.MONGODB_URI
 // 2️⃣ CREATE HTTP SERVER
 // (Required for Socket.IO)
 const server = http.createServer(app);
@@ -63,21 +60,19 @@ io.on("connection", (socket) => {
   });
 });
  connectmongo(process.env.MONGODB_URI)
- .then(() => console.log("DB connected"))
-  .catch(err => console.error(err));
-//  .then(() => {
-//     server.listen(port, () => {
-//       console.log(`Server running at http://localhost:${port}`);
-//     });
-//   })
-//   .catch((err) => {
-//     console.error("DB connection failed:", err.message);
-//     process.exit(1);
-//   });
+ .then(() => {
+    server.listen(port, () => {
+      console.log(`Server running at http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("DB connection failed:", err.message);
+    process.exit(1);
+  });
 
-// server.on("error", (err) => {
-//   console.error("Server error:", err.message);
-// });
+server.on("error", (err) => {
+  console.error("Server error:", err.message);
+});
 
 // Middleware setup 
 
@@ -92,7 +87,3 @@ res.send("<h1>Server is ready </h1>");
 });
 app.use("/api/auth", userRouter);
 app.use("/api/messages", messageRouter);
-
-//export server for vercel
-
-export default server
